@@ -1,4 +1,5 @@
 import pygame
+
 from constants import SCREEN_HEIGHT, SCREEN_WIDTH
 from player import Player
 
@@ -9,13 +10,18 @@ def main():
     clock = pygame.time.Clock()
     dt = 0
 
+    updateable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
+    Player.containers = (updateable, drawable)
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
     while True:
         _ = screen.fill((0, 0, 0))
 
-        player.draw(screen)
-        player.update(dt)
+        for sprite in drawable:
+            sprite.draw(screen)
+        updateable.update(dt)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
